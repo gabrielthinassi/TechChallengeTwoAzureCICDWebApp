@@ -1,0 +1,25 @@
+﻿@model IEnumerable<TechChallengeTwo.Models.Entities.Blog.BlogPost>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Blog de Notícias</h1>
+
+<p>
+    <a asp-action="Create">Adicionar Nova Notícia</a>
+</p>
+
+@foreach (var item in Model) {
+<div class="blog-post">
+    <h2 class="post-title">@Html.DisplayFor(modelItem => item.Title)</h2>
+    <p class="post-content">@Html.DisplayFor(modelItem => item.Content)</p>
+    <p class="post-author"><b>Por: </b>@Html.DisplayFor(modelItem => item.Author)</p>
+    <p class="post-date"><b>Publicação: </b>@Html.DisplayFor(modelItem => item.PublishDate)</p>
+    <div class="post-buttons">
+        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+        <a asp-action="Details" asp-route-id="@item.Id">Detailhe</a>
+        <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+    </div>
+</div>
+}

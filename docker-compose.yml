@@ -1,0 +1,35 @@
+version: '3.4'
+
+networks:
+  mynetwork:  
+
+services:
+  techchallengetwodb:
+    container_name: techchallengetwodb
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+     - 8002:1433
+    environment:
+     - ACCEPT_EULA=Y
+     - MSSQL_SA_PASSWORD=Gmtpostech#2023
+    networks:
+     - mynetwork
+    ##volumes:
+    ##  - C:\Dev\DATABASE\MSSQL\Volumes:/var/opt/mssql/data
+  techchallengetwo:
+    container_name: techchallengetwoapp
+    ports:
+     - 8001:80 
+    image: ${DOCKER_REGISTRY-}techchallengetwo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DbUser: "SA"
+      DbPassword: "Gmtpostech#2023"
+      Database: "BlogDB"
+      DataSource: "techchallengetwodb"
+    depends_on:
+     - techchallengetwodb
+    networks:
+     - mynetwork
